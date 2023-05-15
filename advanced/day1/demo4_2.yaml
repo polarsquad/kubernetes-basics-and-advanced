@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-nginx-v1
+  labels:
+    app: canary-demo
+    type: webserver
+spec:
+  replicas: 3
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: nginx
+      version: v1
+      deploy: blue
+  template:
+    metadata:
+      labels:
+        app: nginx
+        version: v1
+        deploy: blue
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-nginx-v2
+  labels:
+    app: canary-demo
+    type: webserver
+spec:
+  replicas: 3
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: nginx
+      version: v2
+      deploy: green
+  template:
+    metadata:
+      labels:
+        app: nginx
+        version: v2
+        deploy: green
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.23.4
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary-service
+  labels:
+    app: canary-demo
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: nginx
+#    deploy: blue # valid values blue/green
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-ingress
+  labels:
+    app: demo
+spec:
+  rules:
+  - host: tr-tuomas-palosaari.k8s.polarsquad.training
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: canary-service
+            port:
+              number: 80

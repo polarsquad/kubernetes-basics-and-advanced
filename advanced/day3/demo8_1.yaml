@@ -1,0 +1,26 @@
+# Check node labels, if ip-10-0-1-210.eu-west-1.compute.internal isn't labeled type=test, add the label
+# Apply the manifest, it should install the pods to just the desired node 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+  nodeSelector:
+    type: test
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-2
+spec:
+  nodeName: ip-10-0-3-120.eu-west-1.compute.internal # schedule pod to specific node
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent

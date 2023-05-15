@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-nginx
+  labels:
+    app: nginx
+    type: webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: command-demo-container
+        image: debian
+        command: ["/bin/echo"]
+        args: ["$(MESSAGE)"]
+        env: 
+        - name: MESSAGE
+          value: "hello world"
+      restartPolicy: Always
+

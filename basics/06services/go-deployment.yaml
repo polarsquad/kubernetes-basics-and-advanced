@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-go-deployment
+  labels:
+    app: hello-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-go-pod
+  template:
+    metadata:
+      labels:
+        app: hello-go-pod
+    spec:
+      containers:
+      - name: hello-go
+        image: europe-north1-docker.pkg.dev/tuomaspal-sandbox/training/hello-http-redis:1.0.0
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          periodSeconds: 5
+          successThreshold: 1
+          httpGet:
+            path: /
+            port: 8080
+        livenessProbe:
+          periodSeconds: 5
+          successThreshold: 1
+          httpGet:
+            path: /
+            port: 8080
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            memory: 200Mi
+            cpu: 100m
+        env:
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: REDIS
+            valueFrom:
+              configMapKeyRef:
+                name: redis
+                key: redis-address
+          - name: REDIS_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: redis
+                key: redis-port
