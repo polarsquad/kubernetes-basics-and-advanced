@@ -11,9 +11,9 @@ import (
 )
 
 func RedisConnect() redis.Conn {
-	c, err := redis.Dial("tcp", os.Getenv("REDIS")+":6379")
+	c, err := redis.Dial("tcp", os.Getenv("REDIS")+":"+os.Getenv("REDIS_PORT"))
 	HandleError(err)
-	fmt.Printf("Redis responded at " + os.Getenv("REDIS") + ":6379\n")
+	fmt.Printf("Redis responded at " + os.Getenv("REDIS") + ":" + os.Getenv("REDIS_PORT") + "\n")
 	return c
 }
 
@@ -29,7 +29,7 @@ func main() {
 		w.WriteHeader(http.StatusCreated)
 		w.Header().Set("Content-Type", "application/json")
 		resp := make(map[string]string)
-		resp["message"] = "This page intentionally left blank."
+		resp["message"] = "This page intentionally left blank. Version 2."
 		jsonResp, err := json.Marshal(resp)
 		HandleError(err)
 		w.Write(jsonResp)

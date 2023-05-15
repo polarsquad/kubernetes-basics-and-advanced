@@ -4,6 +4,8 @@ These exercises assume that there is a resource quota in your namespace (there i
 
 You can use the demos as starting points but pay attention to the labels.
 
+The app code is under app/ if you want to laugh at my Go skills.
+
 # First Exercise
 
 Create a deployment for europe-north1-docker.pkg.dev/tuomaspal-sandbox/training/hello-http:0.0.1
