@@ -9,5 +9,12 @@ spec:
       - name: pi
         image: perl:5.34.0
         command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
       restartPolicy: Never
   backoffLimit: 4

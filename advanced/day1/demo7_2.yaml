@@ -5,8 +5,8 @@ kind: CronJob
 metadata:
   name: hello
 spec:
-  # Runs every five minutes
-  schedule: "5 * * * *"
+  # Runs every minute
+  schedule: "* * * * *"
   jobTemplate:
     spec:
       template:
@@ -19,4 +19,11 @@ spec:
             - /bin/sh
             - -c
             - date; echo Hello from the Kubernetes cluster
+            resources:
+              requests:
+                memory: "64Mi"
+                cpu: "100m"
+              limits:
+                memory: "128Mi"
+                cpu: "500m"            
           restartPolicy: OnFailure

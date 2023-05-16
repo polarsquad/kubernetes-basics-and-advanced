@@ -23,5 +23,12 @@ spec:
         env: 
         - name: MESSAGE
           value: "hello world"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"          
       restartPolicy: Always
 
