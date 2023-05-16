@@ -4,7 +4,7 @@ These exercises assume that there is a resource quota in your namespace (there i
 
 You can use the demos as starting points but pay attention to the labels.
 
-The app code is under app/ if you want to laugh at my Go skills.
+The app code is under app/ if you want to laugh at my Go skills. 
 
 # First Exercise
 
@@ -20,13 +20,13 @@ Use whatever labeling you feel is useful here, but also add a `version: v1` to `
 
 Now create a new deployment using europe-north1-docker.pkg.dev/tuomaspal-sandbox/training/hello-http:0.0.2 with three replicas
 
-Remember the quota limitatons and health checks for this one as well. Add a label `version: v2` like in the first exercise.
+Remember the quota limitations and health checks for this one as well. Add a label `version: v2` like in the first exercise.
 
 This new version of the app adds Redis capabilities, but don't worry about that for now. It also adds a new endpoint /helloworld, which depends on Redis. Requests to that endpoint will fail, but all the relevant info is actually provided by the root of the app.
 
 Check that you have two different deployments running.
 
-Create a service that routes traffic to both deployments. 
+Create a service that routes traffic to both deployments. Use the service in demo4_2.yaml as a starting point.
 
 You can then create an ingress for the app using this as a basis:
 ```yaml

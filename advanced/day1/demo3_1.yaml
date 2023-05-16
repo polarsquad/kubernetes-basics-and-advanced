@@ -1,6 +1,7 @@
 # Scale the deployment by editing or:
 # kubectl scale --replicas=3 -demo3.yaml
 # kubectl scale --current-replicas=2 --replicas=3 deployment/my-nginx
+# kubectl autoscale deployment my-nginx --cpu-percent=50 --min=1 --max=10
 apiVersion: apps/v1
 kind: Deployment
 metadata:

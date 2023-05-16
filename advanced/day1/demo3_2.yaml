@@ -1,0 +1,16 @@
+# Run this and generate load somehow
+# You could exec the following command in a pod:
+# yes > /dev/null &
+# Check kubectl get pods -w
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-nginx-hpa
+spec:
+  maxReplicas: 10
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-nginx
+  targetCPUUtilizationPercentage: 50

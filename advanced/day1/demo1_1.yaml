@@ -12,5 +12,5 @@ spec:
     args: ["$(MESSAGE)"]
     env: 
     - name: MESSAGE
-      value: "hello world"
-  restartPolicy: OnFailure
+      value: "Hello world!"
+  restartPolicy: Never
