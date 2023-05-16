@@ -1,6 +1,6 @@
 # Deployments
 
-These exercises assume that there is a resource quota in your namespace (there is no quota atm). You can use 1 gigabyte of memory and 1000m CPU as "hard limits" when thinking about resource usage. Once you're done you should delete the resources you've created. You can check your namespace's quota with `kubectl get resourcequota`.
+These exercises assume that there is a resource quota in your namespace. You can use 1 gigabyte of memory and 1000m CPU as "hard limits" when thinking about resource usage. Once you're done you should delete the resources you've created. You can check your namespace's quota with `kubectl get resourcequota`.
 
 An example quota could be set with a manifest like this:
 ```yaml
