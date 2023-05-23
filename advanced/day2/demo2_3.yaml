@@ -1,0 +1,30 @@
+# ExternalName + an nslookup job
+apiVersion: v1
+kind: Service
+metadata:
+  name: google
+spec:
+  type: ExternalName
+  externalName: www.google.com
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nslookup
+spec:
+  template:
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["nslookup","google.tr-tuomas-palosaari.svc.cluster.local"]
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      restartPolicy: Never
+  backoffLimit: 4
+

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-go
-        image: europe-north1-docker.pkg.dev/tuomaspal-sandbox/training/hello-http-redis:1.0.0
+        image: europe-north1-docker.pkg.dev/tuomaspal-sandbox/training/hello-http:0.0.2
         ports:
         - containerPort: 8080
         readinessProbe:

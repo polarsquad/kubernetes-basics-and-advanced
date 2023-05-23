@@ -1,0 +1,67 @@
+# Deployment + Service + a Job for getting the port + clusterIP
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-nginx
+  labels:
+    app: nginx
+    type: webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-named-port-service
+  labels:
+    app: nginx
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+  selector:
+    app: nginx
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nslookup
+spec:
+  template:
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["nslookup","-q=SRV", "_http._tcp.http-named-port-service.tr-tuomas-palosaari.svc.cluster.local"]
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      restartPolicy: Never
+  backoffLimit: 4

@@ -1,0 +1,78 @@
+# A rewrite ingress + two services + two deployments
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-go
+  labels:
+    app: hello-go
+    type: appserver
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: hello-go
+  template:
+    metadata:
+      labels:
+        app: hello-go
+    spec:
+      containers:
+      - name: hello-go
+        imagePullPolicy: Always
+        image: europe-north1-docker.pkg.dev/tuomaspal-sandbox/training/hello-http:0.0.2
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        env:
+          - name: REDIS
+            valueFrom:
+              secretKeyRef:
+                name: redis
+                key: redis-address
+          - name: REDIS_PORT
+            valueFrom:
+              secretKeyRef:
+                name: redis
+                key: redis-port
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis
+type: Opaque
+data:
+  redis-address: cmVkaXMtc2VydmljZQo=
+  redis-port: NjM3OQo=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: secret-service
+  labels:
+    app: secret-demo
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: hello-go

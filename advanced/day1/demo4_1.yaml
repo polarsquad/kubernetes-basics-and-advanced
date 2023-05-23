@@ -28,14 +28,14 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.14.2
-#        image: nginx:1.23.4
+#        image: nginx:1.14.2
+        image: nginx:1.23.4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
         resources:
           requests:
-            memory: "64Mi"
+            memory: "128Mi"
             cpu: "250m"
           limits:
             memory: "128Mi"
