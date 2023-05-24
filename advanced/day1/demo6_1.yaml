@@ -24,7 +24,7 @@ spec:
     matchLabels:
       app: nginx # has to match .spec.template.metadata.labels
   serviceName: "nginx"
-  replicas: 1 # by default is 1
+  replicas: 2 # by default is 1
   minReadySeconds: 10 # by default is 0
   template:
     metadata:
@@ -41,7 +41,7 @@ spec:
             cpu: "100m"
           limits:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "200m"
         ports:
         - containerPort: 80
           name: web
@@ -52,7 +52,7 @@ spec:
   - metadata:
       name: www
     spec:
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes: [ "ReadWriteMany" ]
       storageClassName: "gp2"
       resources:
         requests:

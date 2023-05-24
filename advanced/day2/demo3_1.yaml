@@ -1,5 +1,4 @@
 # A simple ingress + service + deployment
-# A rewrite ingress + service + deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
