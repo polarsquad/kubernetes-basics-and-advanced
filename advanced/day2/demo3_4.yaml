@@ -125,13 +125,15 @@ spec:
     app: nginx
 ---
 ## Multiple ingresses sharing the same host
+## Working rewrite-target with multiple path steps
+## Increase the $n by the number of captured steps you have in the path and specified by (/|$)
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: demo-ingress
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/rewrite-target: /$4
   labels:
     app: demo
 spec:
@@ -140,7 +142,7 @@ spec:
   - host: tr-tuomas-palosaari.k8s.polarsquad.training
     http:
       paths:
-      - path: /go(/|$)(.*)
+      - path: /api/v1/go(/|$)(.*)
         pathType: Prefix
         backend:
           service:

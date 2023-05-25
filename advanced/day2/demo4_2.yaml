@@ -61,6 +61,7 @@ type: Opaque
 data:
   redis-address: cmVkaXMtc2VydmljZQo=
   redis-port: NjM3OQo=
+  redis-password: jfdkasgdhjsaghsklguia
 ---
 apiVersion: v1
 kind: Service
