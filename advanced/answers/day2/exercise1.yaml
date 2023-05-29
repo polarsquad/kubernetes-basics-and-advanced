@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hello-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: gp2
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-go-v1
+  labels:
+    app: hello-go
+    type: appserver
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: hello-go
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: hello-go
+        version: v1
+    spec:
+      containers:
+      - name: hello-go
+        image: europe-north1-docker.pkg.dev/tuomaspal-sandbox/training/hello-http:0.0.1
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        volumeMounts: 
+          - mountPath: /data
+            name: hello
+      volumes:
+        - name: hello
+          persistentVolumeClaim:
+            claimName: hello-claim
