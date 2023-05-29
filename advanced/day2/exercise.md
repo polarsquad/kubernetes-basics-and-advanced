@@ -8,17 +8,17 @@ Create a deployment that uses the PVC to mount a directory inside the pods.
 
 You can also try rerunning the StatefulSet from day1/demo6_1.yaml and see how it handles PVCs.
 
-## Services 
+## Exercise 2 - Services 
 
 Create a PVC and mount it inside an Nginx deployment.
 
-Edit the index.html in /usr/share/nginx/html and scale your deployment down to zero. Check that the PVC is retained. Scale the deployment back up again and check that your changes are in place.
+Create and edit an index.html in /usr/share/nginx/html and scale your deployment down to zero. Check that the PVC is retained. Scale the deployment back up again and check that your changes are in place.
 
 Now create a service that allows you to access your pods.
 
 Test the functionality with `kubectl port-forward`.
 
-## Ingresses
+## Exercise 3 - Ingresses
 
 We're using an Nginx ingress controller. 
 
