@@ -1,0 +1,78 @@
+# Create node taints
+# ➜  ~ kubectl taint nodes ip-10-0-1-214.eu-west-1.compute.internal key1=value1:NoExecute
+# ➜  ~ kubectl taint nodes ip-10-0-1-214.eu-west-1.compute.internal key1=value2:NoSchedule 
+# Get list of node taints:
+#  k get nodes -o json | jq '.items[].spec.taints'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-2
+spec:
+  nodeName: ip-10-0-1-214.eu-west-1.compute.internal # schedule pod to specific node that is tainted
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-3
+  labels:
+    env: test
+spec:
+  nodeName: ip-10-0-1-214.eu-west-1.compute.internal # schedule pod to specific node that is tainted
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value1"
+    effect: "NoExecute"
+  - key: "key1"
+    operator: "Equal"
+    value: "value2"
+    effect: "NoSchedule"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  nodeName: ip-10-0-1-214.eu-west-1.compute.internal # schedule pod to specific node that is tainted
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value2"
+    effect: "NoSchedule"
+
+
