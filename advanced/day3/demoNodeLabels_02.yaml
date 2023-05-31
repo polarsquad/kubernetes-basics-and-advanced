@@ -28,5 +28,4 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "100m"
-      nodeSelector:
-        type: test
+      nodeName: ip-10-0-3-120.eu-west-1.compute.internal
