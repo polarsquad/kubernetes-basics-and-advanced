@@ -52,7 +52,7 @@ func main() {
 		log.Printf("hello called\n")
 	})
 
-	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		//conn := RedisConnect()
 		//		_, err := conn.Do("INCR", "hello")
 		//		w.WriteHeader(http.StatusCreated)
@@ -63,7 +63,7 @@ func main() {
 		jsonResp, err := json.Marshal(resp)
 		HandleError(err)
 		w.Write(jsonResp)
-		log.Printf("healthz called\n")
+		log.Printf("health called, request failed with error 502\n")
 	})
 
 	fmt.Printf("Server running (port=8080)\n")
