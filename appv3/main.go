@@ -52,7 +52,7 @@ func main() {
 		log.Printf("hello called\n")
 	})
 
-	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/live", func(w http.ResponseWriter, r *http.Request) {
 		//conn := RedisConnect()
 		//		_, err := conn.Do("INCR", "hello")
 		//		w.WriteHeader(http.StatusCreated)
