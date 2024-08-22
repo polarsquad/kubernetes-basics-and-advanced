@@ -3,6 +3,11 @@
 Create a deployment with nginx or some other image. Make sure that the app is running on a node with
 type = test.
 
+Labels can be shown by running the following command:
+```
+kubectl get nodes --show-labels
+```
+
 # Scheduling apps to tainted nodes
 
 There is a tainted node in the cluster. It has two sorts of taints turned on.
