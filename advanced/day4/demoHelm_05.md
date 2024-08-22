@@ -20,4 +20,4 @@ You could then use this chart to install the app with:
 helm install demo oci://europe-north1-docker.pkg.dev/tuomaspal-sandbox/training/mynewchart --version 1.0.0 -f ownValues.yaml
 ```
 
-It's sometimes easier to use a values file instead of overriding everything on the command line, especially if Helm is expectin so-called tables of values.
+It's sometimes easier to use a values file instead of overriding everything on the command line, especially if Helm is expecting so-called tables of values.
