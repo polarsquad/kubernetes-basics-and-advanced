@@ -10,8 +10,10 @@ There is a tainted node in the cluster. It has two sorts of taints turned on.
 ```
 kubectl taint nodes <node hostname> key1=value1:NoExecute
 kubectl taint nodes <node hostname> key1=value2:NoSchedule
-key1=value1:NoExecute
-key1=value2:NoSchedule
 ```
 
+Taints can be checked by eg.:
+```
+kubectl get nodes -o json | jq '.items[].spec.taints'
+```
 Create a deployment or a pod that runs on this node.
