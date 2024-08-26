@@ -16,7 +16,7 @@ spec:
     limits.memory: 1Gi
 ```
 
-The cluster admins could then set the quota with `kubectl apply -f my-quota.yaml -n <namespace>`
+The cluster admins could then set the quota with `for ns in $(kubectl get ns --no-headers -o custom-columns=":metadata.name" | grep ^tr); do kubectl apply -f my-quota.yaml -n $ns; done`
 
 You can use the demos as starting points but pay attention to the labels.
 
