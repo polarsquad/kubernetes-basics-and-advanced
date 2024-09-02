@@ -1,0 +1,22 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "pods.eks.amazonaws.com"
+            },
+            "Action": [
+                "sts:AssumeRole",
+                "sts:TagSession"
+            ],
+            "Condition": {
+                "ArnEquals": {
+                    "aws:SourceArn": [
+                        "arn:aws:eks:eu-north-1:050548751257:cluster/stetson"
+                    ]
+                }
+            }
+        }
+    ]
+}

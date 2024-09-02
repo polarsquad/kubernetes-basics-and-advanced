@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pod-envs
+  namespace: pod-identity
+data:
+  cluster_name: stetson
+  bucket_name: stetson-bucket

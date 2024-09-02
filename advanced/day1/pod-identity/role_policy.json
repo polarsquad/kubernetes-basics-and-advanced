@@ -1,0 +1,33 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::stetson-bucket"
+            ]
+        },
+        {
+            "Action":[
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::stetson-bucket/config/${aws:PrincipalTag/eks-cluster-name}/${aws:PrincipalTag/kubernetes-namespace}/${aws:PrincipalTag/kubernetes-service-account}/*",
+                "arn:aws:s3:::stetson-bucket/config/${aws:PrincipalTag/eks-cluster-name}/${aws:PrincipalTag/kubernetes-namespace}/*",
+                "arn:aws:s3:::stetson-bucket/config/${aws:PrincipalTag/eks-cluster-name}/*"
+            ]
+        },
+        {
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::stetson-bucket",
+            "Effect": "Allow"
+        }
+    ]
+}

@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: awscli
+  namespace: pod-identity
+  labels:
+    app: awscli
+spec:
+  serviceAccountName: pod-identity-demo
+  containers:
+  - image: amazon/aws-cli
+    name: awscli
+    command:
+      - "sleep"
+      - "604800"
+    env:
+      - name: CLUSTER_NAME
+        valueFrom:
+          configMapKeyRef:
+            name: pod-envs
+            key: cluster_name
+      - name: BUCKET_NAME
+        valueFrom:
+          configMapKeyRef:
+            name: pod-envs
+            key: bucket_name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+      - name: POD_SERVICE_ACCOUNT
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.serviceAccountName
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /mtn/envs
+        name: pod-envs
+        readOnly: true
+    volumes:
+      - name: pod-envs
+        configMap:
+          name: pod-envs
+          defaultMode: 0755
+  restartPolicy: Always
