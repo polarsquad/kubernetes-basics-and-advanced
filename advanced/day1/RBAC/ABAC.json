@@ -1,0 +1,12 @@
+{
+    "apiVersion": "abac.authorization.kubernetes.io/v1beta1",
+    "kind": "Policy",
+    "spec": {
+        "user":"jane",
+        "namespace": "projectCaribou",
+        "resource": "pods/deployments",
+        "apiGroup": "*",
+        "readonly": false,
+        "verbs": "create/update/delete"
+    }
+}
