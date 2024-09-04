@@ -67,11 +67,11 @@ metadata:
     app: demo
 spec:
   rules:
-  - host: tr-tuomas-palosaari.k8s.polarsquad.training
+  - host: tr-tupalosa.k8s.polarsquad.training
     http:
       paths:
       - path: /api(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: rewrite-service

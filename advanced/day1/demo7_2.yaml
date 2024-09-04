@@ -1,4 +1,4 @@
-# You can suspend your cronjob with:
+ g# You can suspend your cronjob with:
 # kubectl patch cronjobs hello -p '{"spec" : {"suspend" : true }}'
 apiVersion: batch/v1
 kind: CronJob
