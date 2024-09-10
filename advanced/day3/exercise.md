@@ -14,7 +14,7 @@ There is a tainted node in the cluster. It has two sorts of taints turned on.
 
 ```
 kubectl taint nodes <node hostname> key1=value1:NoExecute
-kubectl taint nodes <node hostname> key1=value2:NoSchedule
+kubectl taint nodes <node hostname> key2=value2:NoSchedule
 ```
 
 Taints can be checked by eg.:
