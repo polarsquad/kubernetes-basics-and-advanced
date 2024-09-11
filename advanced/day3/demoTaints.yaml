@@ -1,6 +1,6 @@
 # Create node taints
-# ➜  ~ kubectl taint nodes ip-10-0-1-214.eu-west-1.compute.internal key1=value1:NoExecute
-# ➜  ~ kubectl taint nodes ip-10-0-1-214.eu-west-1.compute.internal key1=value2:NoSchedule 
+# kubectl taint nodes ip-10-0-3-82.eu-west-1.compute.internal key1=value2:NoExecute                                                  
+# kubectl taint nodes ip-10-0-3-82.eu-west-1.compute.internal key2=value2:NoExecute
 # Get list of node taints:
 #  k get nodes -o json | jq '.items[].spec.taints'
 apiVersion: v1
