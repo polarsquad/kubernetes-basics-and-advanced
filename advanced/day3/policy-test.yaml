@@ -4,9 +4,6 @@ metadata:
   name: test4
   labels:
     app: test
-    owner: jimmy
-    env: dev
-    billing: lob-cc
 spec:
   hostNetwork: true
   hostPID: true
@@ -49,3 +46,37 @@ spec:
   volumes:
   - name: tmp
     emptyDir: {}
+--- 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test4-nginx
+  labels:
+    app: test-nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      imagePullPolicy: IfNotPresent
+      securityContext:  
+        allowPrivilegeEscalation: true  
+        readOnlyRootFilesystem: false
+      ports:
+      - containerPort: 8080
+      resources:  
+        limits:  
+          cpu: 200m  
+          memory: 20Mi  
+        requests:  
+          cpu: 100m  
+          memory: 10Mi  
+      readinessProbe:
+        tcpSocket:
+          port: 8080
+        initialDelaySeconds: 5
+        periodSeconds: 10
+      livenessProbe:
+        tcpSocket:
+          port: 8080
+        initialDelaySeconds: 15
+        periodSeconds: 20
