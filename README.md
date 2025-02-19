@@ -12,10 +12,8 @@ Multiple deployments in the same directory. If you want to test the ingress, you
 
 ## Demos
 
-Demos are named day1/demo1_1.yaml, day2/demo1_2.yaml and so on. Ask for help in the Slack
-channel if you get stuck or encounter typos or other errors.
+Demos are named day1/demo1_1.yaml, day2/demo1_2.yaml and so on. 
 
 ## Exercises
 
-Exercises are defined in day1/exercise.md, day2/exercise.md and so on. Same guidelines apply for asking
-help, please ask in the channel since someone else may have encountered the same issue.
+Exercises are defined in day1/exercise.md, day2/exercise.md and so on. 

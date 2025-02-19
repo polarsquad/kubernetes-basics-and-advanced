@@ -21,7 +21,7 @@ metadata:
     app: demo
 spec:
   rules:
-  - host: tr-tuomas-palosaari.k8s.polarsquad.training
+  - host: tuomas.k8s.polarsquad.training
     http:
       paths:
       - path: /

@@ -64,7 +64,7 @@ metadata:
     app: demo
 spec:
   rules:
-  - host: tr-tupalosa.k8s.polarsquad.training
+  - host: tr-tuomas.k8s.polarsquad.training
     http:
       paths:
       - path: /
