@@ -9,11 +9,6 @@ metadata:
 spec:
   replicas: 1
   revisionHistoryLimit: 5
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
   selector:
     matchLabels:
       app: hello-go
@@ -35,45 +30,19 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "100m"
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 10
-          periodSeconds: 3
         env:
           - name: REDIS
             valueFrom:
-              secretKeyRef:
-                name: redis
+              configMapKeyRef:
+                name: redis-configmap
                 key: redis-address
           - name: REDIS_PORT
             valueFrom:
-              secretKeyRef:
-                name: redis
+              configMapKeyRef:
+                name: redis-configmap
                 key: redis-port
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: redis
-type: Opaque
-data:
-  redis-address: cmVkaXMtc2VydmljZQo=
-  redis-port: NjM3OQo=
-  redis-password: bXlfc3VwZXJfc2VjcmV0X3JlZGlzX3Bhc3N3b3JkCg==
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: secret-service
-  labels:
-    app: secret-demo
-spec:
-  ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 8080
-  selector:
-    app: hello-go
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: redis-secret
+                key: redis-password
