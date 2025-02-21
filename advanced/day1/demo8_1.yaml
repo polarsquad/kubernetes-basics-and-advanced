@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-external-webapp-access
+  namespace: tr-tuomas  # Replace with your actual namespace
+spec:
+  podSelector: {}
+  ingress:
+    - from:
+        - podSelector: {}  # Allow all pods within the same namespace
+      ports: []
+
+    - from:
+        - namespaceSelector:
+            matchLabels: {}  # Allow all namespaces within the cluster
+      ports:
+        - protocol: TCP
+          port: 80  # Allow access to port 8080 from other namespaces        
+        - protocol: TCP
+          port: 8080  # Allow access to port 8080 from other namespaces
+        - protocol: TCP
+          port: 6379  # Allow access to port 8080 from other namespaces
+
+    - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0  # Allow access from external sources
+      ports:
+        - protocol: TCP
+          port: 8080  # Allow external access to port 8080
+
+  egress:
+    - to:
+        - podSelector: {}  # Allow egress to any pod in the same namespace
+      ports:
+        - protocol: TCP
+          port: 8080  # Allow egress to port 8080
