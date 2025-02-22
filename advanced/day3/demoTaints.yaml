@@ -1,6 +1,6 @@
 # Create node taints
-# kubectl taint nodes ip-10-0-3-82.eu-west-1.compute.internal key1=value2:NoExecute                                                  
-# kubectl taint nodes ip-10-0-3-82.eu-west-1.compute.internal key2=value2:NoExecute
+# kubectl taint nodes ip-10-0-3-30.eu-west-1.compute.internal key1=value2:NoExecute                                                  
+# kubectl taint nodes ip-10-0-3-30.eu-west-1.compute.internal key2=value2:NoExecute
 # Get list of node taints:
 #  k get nodes -o json | jq '.items[].spec.taints'
 apiVersion: v1
@@ -28,7 +28,7 @@ metadata:
   labels:
     env: test
 spec:
-  nodeName: ip-10-0-3-82.eu-west-1.compute.internal # schedule pod to specific node that is tainted
+  nodeName: ip-10-0-3-30.eu-west-1.compute.internal # schedule pod to specific node that is tainted
   containers:
   - name: nginx
     image: nginx
@@ -57,7 +57,7 @@ metadata:
   labels:
     env: test
 spec:
-  nodeName: ip-10-0-3-82.eu-west-1.compute.internal # schedule pod to specific node that is tainted
+  nodeName: ip-10-0-3-30.eu-west-1.compute.internal # schedule pod to specific node that is tainted
   containers:
   - name: nginx
     image: nginx

@@ -17,7 +17,7 @@ spec:
       containers:
       - name: busybox
         image: busybox
-        command: ["nslookup","google.tr-tuomas-palosaari.svc.cluster.local"]
+        command: ["nslookup","google.tr-tuomas.svc.cluster.local"]
         resources:
           requests:
             memory: "64Mi"
