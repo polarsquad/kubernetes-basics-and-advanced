@@ -26,7 +26,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: gp2
+  storageClassName: ebs-sc
   resources:
     requests:
       storage: 1Gi
@@ -57,16 +57,6 @@ spec:
           limits:
             cpu: 100m
             memory: 200Mi
-        livenessProbe:
-          tcpSocket: 
-            port: 6379
-          initialDelaySeconds: 30
-          timeoutSeconds: 10
-        readinessProbe:
-          exec:
-            command: ["redis-cli", "ping", "|", "grep PONG"]
-          initialDelaySeconds: 30
-          timeoutSeconds: 10
         volumeMounts: 
           - mountPath: /data
             name: redis-data

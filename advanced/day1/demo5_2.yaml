@@ -28,6 +28,12 @@ spec:
           limits:
             memory: 200Mi
             cpu: 100m
+        startupProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 30
         livenessProbe:
           tcpSocket: 
             port: 6379

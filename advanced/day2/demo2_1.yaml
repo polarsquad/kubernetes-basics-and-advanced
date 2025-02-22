@@ -55,7 +55,7 @@ spec:
       containers:
       - name: busybox
         image: busybox
-        command: ["nslookup","-q=SRV", "_http._tcp.http-named-port-service.tr-tuomas-palosaari.svc.cluster.local"]
+        command: ["nslookup","-q=SRV", "_http._tcp.http-named-port-service.tr-tuomas.svc.cluster.local"]
         resources:
           requests:
             memory: "64Mi"
