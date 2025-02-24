@@ -15,7 +15,7 @@ spec:
             matchLabels: {}  # Allow all namespaces within the cluster
       ports:
         - protocol: TCP
-          port: 80  # Allow access to port 8080 from other namespaces        
+          port: 80  # Allow access to port 80 from other namespaces        
         - protocol: TCP
           port: 8080  # Allow access to port 8080 from other namespaces
         - protocol: TCP
