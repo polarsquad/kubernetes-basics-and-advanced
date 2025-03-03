@@ -1,0 +1,4 @@
+.kubeconfig
+.awsconfig
+.awscredentials
+modules/Helm/mynewchart
