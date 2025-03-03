@@ -1,0 +1,68 @@
+# An example PersistentVolume and PersistentVolumeClaim
+# Remember to check the status of the PVC once you're done
+# and delete it if necessary
+# The current user accounts don't have access to PVs 
+#
+# Example PV
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: task-pv-volume
+#   labels:
+#     type: local
+# spec:
+#   storageClassName: ebs-sc
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ebs-sc
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-pvc-demo
+  labels:
+    app: redis-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-pod
+  template:
+    metadata:
+      labels:
+        app: redis-pod
+    spec:
+      containers:
+      - image: redis:7.0.5
+        name: redis
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts: 
+          - mountPath: /data
+            name: redis-data
+        ports:
+        - containerPort: 6379
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-claim
